@@ -8,9 +8,10 @@ export class ControlButtons extends Component {
   onRestartClick = () => {
     console.log("onRestartClick");
   };
-  onCancelClick = () => {};
+  
   render() {
-    const { selectedItems } = this.props;
+    const { onCancelClick, selectedItems } = this.props;
+    console.log('selectedItems----------------', selectedItems);
     return (
       <div>
         <button
@@ -32,7 +33,7 @@ export class ControlButtons extends Component {
         <button
           type="submit"
           className="btn-default"
-          onClick={this.onCancelClick}
+          onClick={onCancelClick}
           disabled={selectedItems.length === 0}
         >
           <h6>Cancel</h6>

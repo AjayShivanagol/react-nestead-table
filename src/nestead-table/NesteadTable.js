@@ -53,7 +53,7 @@ const jsonData = [
           isMaster: false,
           selected: false,
           id: 0.2,
-          zipCode: "0351s0",
+          zipCode: "333333",
           city: "North Laurineshire",
           street: "Jerde Spring"
         },

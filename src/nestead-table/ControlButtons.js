@@ -18,23 +18,23 @@ export class ControlButtons extends Component {
           type="submit"
           className="btn-default"
           onClick={this.onTerminateClick}
-          disabled={selectedItems.length === 0}
+          // disabled={selectedItems.length === 0}
         >
           <h6>Restart</h6>
-        </button>
+        </button>{" "}
         <button
           type="submit"
           className="btn-default"
           onClick={this.onRestartClick}
-          disabled={selectedItems.length === 0}
+          // disabled={selectedItems.length === 0}
         >
           <h6>Terminate</h6>
-        </button>
+        </button>{" "}
         <button
           type="submit"
           className="btn-default"
           onClick={onCancelClick}
-          disabled={selectedItems.length === 0}
+          // disabled={selectedItems.length === 0}
         >
           <h6>Cancel</h6>
         </button>

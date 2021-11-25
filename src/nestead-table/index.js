@@ -8,10 +8,14 @@ import ImageZoom from 'react-medium-image-zoom';
 import _ from 'lodash';
 import ControlButtons from "./ControlButtons";
 import { Col, Container, Row } from 'react-bootstrap';
+import ShowMore from 'react-show-more';
+import $ from 'jquery'; 
 
 
 const MIN_ROWS = 0;
 const PAGE_SIZE = 5;
+let selectedItemsListID = [];
+let unSelectedItemsListID = [];
 
 function uniqId() {
   return `${Date.now()}${(Math.random() * 10) | 0}`.substr(5);
@@ -82,11 +86,15 @@ class ReactNestedTable extends Component {
     };
     this.onCancelClick = this.onCancelClick.bind(this);
   }
+  
+  componentDidMount() {
+    sessionStorage.setItem('selectedItemsListID', JSON.stringify([]));
+  }
 
   onMasterCheckedHandle(data) {
     const isMaster = data.every((item) => {
-      return item._original.isMaster === true
-    })
+      return item._original.isMaster === true;
+    });
     return isMaster;
   }
 
@@ -108,14 +116,14 @@ class ReactNestedTable extends Component {
                 if (isObject(subItems)) {
                   objectLoop(subItems);
                 }
-              })
+              });
             }
           });
         }
       }
       return item;
     });
-  
+
     this.setState({
       selectedItems: [],
       allData: templist,
@@ -123,20 +131,51 @@ class ReactNestedTable extends Component {
     });
   }
 
-
-  onMasterCheck(e, obj) {
+  onMasterCheck(isChecked, obj) {
+    let tempSelectListId = [];
+    tempSelectListId = JSON.parse(sessionStorage.getItem('selectedItemsListID'));
     let tempSelectedItem = this.state.selectedItems;
-    console.log('ddddddd------', e, this.state.allData.length, obj);
+    console.log('ddddsssssssssddd------', isChecked, this.state.allData.length, tempSelectListId);
     let templist = this.state.allData;
     if (this.state.allData.length === obj.length) {
       templist = templist.map((item) => {
-        item.selected = e.target.checked;
+        item.selected = isChecked;
+
+        // to store objId in array.
+        if(isChecked) {
+          console.log('tempSelectListId---------------', tempSelectListId.length);
+          let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+          console.log('isExisitisExisitisExisitisExisit', isExisit);
+          if (!isExisit) {
+            tempSelectListId.push(item.ID);
+            unSelectedItemsListID = [];
+          }
+        } else {
+          tempSelectListId = tempSelectListId?.filter((ID) => {
+            return ID != item.ID;
+          });
+          unSelectedItemsListID.push(item.ID);
+        }
+
         if (isObject(item)) {
           objectLoop(item);
           function objectLoop(item) {
             Object.keys(item).forEach((key) => {
-              item.selected = e.target.checked;
-              item.isMaster = e.target.checked;
+              item.selected = isChecked;
+              item.isMaster = isChecked;
+
+              // to store objId in array.
+              if(isChecked) {
+                let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+                if (!isExisit) {
+                  tempSelectListId.push(item.ID);
+                }
+              } else {
+                tempSelectListId = tempSelectListId?.filter((ID) => {
+                  return ID != item.ID;
+                });
+              }
+
               if (isObject(item[key])) {
                 objectLoop(item[key]);
               }
@@ -145,15 +184,18 @@ class ReactNestedTable extends Component {
                   if (isObject(subItems)) {
                     objectLoop(subItems);
                   }
-                })
+                });
               }
             });
           }
         }
 
         // To store the values of selected items.
-        if (e.target.checked) {
-          tempSelectedItem.push(item);
+        if (isChecked) {
+          let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+          if(!isExisit) {
+            tempSelectedItem.push(item);
+          }
         } else {
           tempSelectedItem = [];
         }
@@ -162,12 +204,48 @@ class ReactNestedTable extends Component {
     } else {
       obj.forEach((objItem) => {
         console.log('onMasterCheck------', objItem._original);
-        objItem._original.selected = e.target.checked;
-        objItem._original.isMaster = e.target.checked;
+        objItem._original.selected = isChecked;
+        objItem._original.isMaster = isChecked;
+
+                      // to store objId in array.
+                      if(isChecked) {
+                        let isExisit = tempSelectListId.some((ID) => ID ===  objItem._original.ID);
+                        console.log('xxxxxxxxxxxxxxxxxxxxxx', isExisit);
+                        if (!isExisit) {
+                          tempSelectListId.push(objItem._original.ID);
+                          unSelectedItemsListID = unSelectedItemsListID?.filter((ID) => {
+                            return ID !=  objItem._original.ID;
+                          });
+                        }
+                      } else {
+                        tempSelectListId = tempSelectListId?.filter((ID) => {
+                          return ID !=  objItem._original.ID;
+                        });
+                          unSelectedItemsListID.push(objItem._original.ID);
+                      }
+
         objectLoop(objItem._original);
         function objectLoop(item) {
-          item.selected = e.target.checked;
-          item.isMaster = e.target.checked;
+          item.selected = isChecked;
+          item.isMaster = isChecked;
+
+                                // to store objId in array.
+                                if(isChecked) {
+                                  let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+                                    console.log('xxxxxxxxxxxxxxxxxxxxxx11111', isExisit);
+                                  if (!isExisit) {
+                                    tempSelectListId.push(item.ID);
+                                    unSelectedItemsListID = unSelectedItemsListID?.filter((ID) => {
+                                      return ID != item.ID;
+                                    });
+                                  }
+                                } else {
+                                  tempSelectListId = tempSelectListId?.filter((ID) => {
+                                    return ID != item.ID;
+                                  });
+                                   unSelectedItemsListID.push(item.ID);        
+                                }
+
           Object.keys(item).forEach((key) => {
             if (isObject(item[key])) {
               objectLoop(item[key]);
@@ -177,61 +255,87 @@ class ReactNestedTable extends Component {
                 if (isObject(subItems)) {
                   objectLoop(subItems);
                 }
-              })
+              });
             }
-          })
+          });
         }
         // to store selected items in an array.
-        const id = getNatural(objItem._original.id);
-        if (e.target.checked) {
-          const selectedItems = templist.filter((o => o.id === id));
-          let isExisit = tempSelectedItem.some(o => o.id === id);
+        const ID = getNatural(objItem._original.ID);
+        if (isChecked) {
+          const selectedItems = templist.filter((o) => o.ID === ID);
+          let isExisit = tempSelectedItem.some((o) => o.ID === ID);
           if (!isExisit) {
             tempSelectedItem.push(...selectedItems);
           }
         } else {
           // to remove selected items.
           tempSelectedItem = tempSelectedItem?.filter((el) => {
-            return el.id != id;
-          })
+            return el.ID != ID;
+          });
         }
-      })
+      });
     }
 
-    this.setState({
-      selectedItems: tempSelectedItem,
-      masterChecked: e.target.checked,
-      allData: templist
-    });
+    
+    sessionStorage.setItem('selectedItemsListID', JSON.stringify(tempSelectListId));
+    console.log('tempSelectedItem----------------------', tempSelectedItem);
+
+    console.log('tempSelectListIdtempSelectListId----------------------', tempSelectListId);
+    console.log('unSelectedItemsListIDunSelectedItemsListIDrrrrrrrrr----------------------', unSelectedItemsListID);
+
+    this.state.selectedItems = tempSelectedItem;
+    this.state.allData = templist;
+    this.jequeryCheckbox()
+    // this.setState({
+    //   selectedItems: tempSelectedItem,
+    //   masterChecked: isChecked,
+    //   allData: templist
+    // });
   }
 
-  onItemCheck(e, obj) {
-    console.log('onItemClick------', e, obj);
+  onItemCheck(isChecked, obj) {
+    let tempSelectListId = JSON.parse(sessionStorage.getItem('selectedItemsListID')) || [];
     let tempSelectedItem = this.state.selectedItems;
     let templist = this.state.allData;
     templist = templist.map((item) => {
-      if (item.id === obj.id) {
+      if (item.ID === obj.ID) {
         objectLoop(item);
         function objectLoop(item) {
           Object.keys(item).forEach((key) => {
-            item.selected = e.target.checked;
-            item.isMaster = e.target.checked;
+            item.selected = isChecked;
+            item.isMaster = isChecked;
+
+            // to store selected ID's in list.
+            if(isChecked) {
+              let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+              if (!isExisit) {
+                tempSelectListId.push(item.ID);
+                unSelectedItemsListID = unSelectedItemsListID?.filter((ID) => {
+                  return ID !=  item.ID;
+                });
+              }
+            } else {
+              tempSelectListId = tempSelectListId?.filter((ID) => {
+                return ID != item.ID;
+              });
+              unSelectedItemsListID.push(item.ID);
+            }
 
             // TO store the values of selected items.
-            if (e.target.checked) {
+            if (isChecked) {
               let insertUniqueObject = function (arr, obj) {
-                let isExisit = arr.some(o => o.id === obj.id);
+                let isExisit = arr.some((o) => o.ID === obj.ID);
                 if (!isExisit) {
                   tempSelectedItem.push(obj);
                 }
                 return arr;
-              }
-              insertUniqueObject(tempSelectedItem, obj)
+              };
+              insertUniqueObject(tempSelectedItem, obj);
             } else {
               // to remove selected items.
               tempSelectedItem = tempSelectedItem?.filter((el) => {
-                return el.id != obj.id;
-              })
+                return el.ID != obj.ID;
+              });
             }
             if (isObject(item[key])) {
               objectLoop(item[key]);
@@ -242,18 +346,34 @@ class ReactNestedTable extends Component {
                 if (isObject(subItems)) {
                   objectLoop(subItems);
                 }
-              })
+              });
             }
           });
         }
-        return { ...item, selected: e.target.checked };
+        return { ...item, selected: isChecked };
       } else {
-        if (item.id === getNatural(obj.id)) {
+        if (item.ID === getNatural(obj.ID)) {
           objectLoop(item);
           function objectLoop(item) {
             Object.keys(item).forEach((key) => {
-              if (item.id === obj.id) {
-                item.selected = e.target.checked;
+              if (item.ID === obj.ID) {
+                item.selected = isChecked;
+
+                    // to store selected ID's in list.
+                    if(isChecked) {
+                      let isExisit = tempSelectListId.some((ID) => ID === item.ID);
+                      if (!isExisit) {
+                        tempSelectListId.push(item.ID);
+                        unSelectedItemsListID = unSelectedItemsListID?.filter((ID) => {
+                          return ID !=  item.ID;
+                        });
+                      }
+                    } else {
+                      tempSelectListId = tempSelectListId?.filter((ID) => {
+                        return ID != item.ID;
+                      });
+                      unSelectedItemsListID.push(item.ID);
+                    }
               }
               if (isObject(item[key])) {
                 objectLoop(item[key]);
@@ -264,41 +384,69 @@ class ReactNestedTable extends Component {
                   if (isObject(subItems)) {
                     objectLoop(subItems);
                   }
-                })
+                });
               }
-            })
+            });
           }
           // To store the values of selected items.
-          if (e.target.checked) {
+          if (isChecked) {
             let insertUniqueObject = function (arr, obj) {
-              let isExisit = arr.some(o => o.id === obj.id);
+              let isExisit = arr.some((o) => o.ID === obj.ID);
               if (!isExisit) {
                 tempSelectedItem.push(obj);
               }
               return arr;
-            }
-            insertUniqueObject(tempSelectedItem, obj)
+            };
+            insertUniqueObject(tempSelectedItem, obj);
           } else {
-            tempSelectedItem = tempSelectedItem?.filter(
-              (el) => {
-                return el.id != obj.id;
-              }
-            )
+            tempSelectedItem = tempSelectedItem?.filter((el) => {
+              return el.ID != obj.ID;
+            });
           }
         }
       }
       return item;
     });
-    this.setState({
-      selectedItems: tempSelectedItem,
-      allData: templist
-    });
+
+    sessionStorage.setItem('selectedItemsListID', JSON.stringify(tempSelectListId));
+    console.log('tempSelectListId================-ssss---------------------', tempSelectListId);
+    console.log('selectedItemsListID-ssss---------------------', selectedItemsListID);
+    console.log('wwwwwwwwwwwwwwww', tempSelectedItem);
+    this.state.selectedItems = tempSelectedItem;
+    this.state.allData = templist;
+    console.log('this.state.allDatafffffffff---------------------', this.state.allData);
+
+
+    this.jequeryCheckbox()
+    // this.setState({
+    //   selectedItems: tempSelectedItem,
+    //   allData: templist
+    // });
+  }
+
+  jequeryCheckbox() {
+    const tempSelectListId = JSON.parse(sessionStorage.getItem('selectedItemsListID')) || [];
+    console.log('tempSelectListId2222222222222------', tempSelectListId);
+    console.log('unSelectedItemsListID2222222222222------', unSelectedItemsListID);
+    $(document).ready(function(){
+      if(tempSelectListId.length > 0) {
+        tempSelectListId.map(ID => {
+            return $('input[type=checkbox][ID="'+String(ID)+'"]').prop('checked', true);
+        });
+      } else {
+        $('input[type=checkbox]').prop('checked', false);
+      }
+      if(unSelectedItemsListID.length > 0) {
+        unSelectedItemsListID.map(ID => {
+        return $('input[type=checkbox][ID="'+String(ID)+'"]').prop('checked', false);
+        });
+      }
+  })
   }
 
   /**
    * Transfer data to columns that is used for rendering table
    * @param {Array} data
-     * @param {Array} data 
    * @param {Array} data
      * @param {Array} data 
    * @param {Array} data
@@ -307,6 +455,33 @@ class ReactNestedTable extends Component {
      * @param {Array} data 
    * @param {Array} data
      * @param {Array} data 
+   * @param {Array} data
+   * @param {Array} data
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+   * @param {Array} data
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+   * @param {Array} data
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
+   * @param {Array} data
+   * @param {Array} data
+     * @param {Array} data 
+   * @param {Array} data
    * @param {Array} data
    * @returns {Array} an array of columns configuration
    */
@@ -319,13 +494,21 @@ class ReactNestedTable extends Component {
         const defaultColumn = {
           Header: keyMaps[key] || key,
           accessor: key,
-          width: getTextWidth(key)
+          style: { whiteSpace: 'unset' },
+          // width: getTextWidth(key),
+          Cell: ({ ...rowInfo }) => (
+            <div>
+              <ShowMore lines={1} more='more' less='less' widh={'150px'}>
+                {rowInfo.original[key]}
+              </ShowMore>
+            </div>
+          )
         };
 
         // To hide coloumns which are not required.
         if (this.state.excludeColoumns.includes(key)) {
           return {
-            show: false,
+            show: false
           };
         }
 
@@ -335,18 +518,20 @@ class ReactNestedTable extends Component {
             Header: (obj) => (
               <input
                 type='checkbox'
-                onChange={(e) => this.onMasterCheck(e, obj.data)}
-                checked={this.onMasterCheckedHandle(obj.data)}
+                ID = {obj.data.ID}
+                onChange={(e) => this.onMasterCheck(e.target.checked, obj.data)}
+                // checked={this.onMasterCheckedHandle(obj.data)}
               />
             ),
             width: 65,
-            id: key,
+            ID: key,
             Cell: ({ ...rowInfo }) => (
               <div>
                 <input
                   type='checkbox'
-                  onChange={(e) => this.onItemCheck(e, rowInfo.original)}
-                  checked={rowInfo.original.selected}
+                  ID={rowInfo.original.ID}
+                  onChange={(e) => this.onItemCheck(e.target.checked, rowInfo.original)}
+                  // checked={rowInfo.original.selected}
                 />
               </div>
             ),
@@ -366,7 +551,7 @@ class ReactNestedTable extends Component {
             expander: true,
             Header: () => <strong>{keyMaps[key] || key}</strong>,
             width: 65,
-            id: key,
+            ID: key,
             Expander: ({ isExpanded, ...rowInfo }) => (
               <div>
                 {isExpanded && currentExpandedKeys[rowInfo.index] === key ? (
@@ -410,7 +595,7 @@ class ReactNestedTable extends Component {
         return defaultColumn;
       });
     }
-    return [{ Header: 'ID', accessor: 'id' }];
+    return [{ Header: 'ID', accessor: 'ID' }];
   }
 
   /**
@@ -468,15 +653,13 @@ class ReactNestedTable extends Component {
             // get current active key which needs to be expanded (triggered by clicking on a td element)
             const currentExpandedKey = currentExpandedKeys[row.index];
             let coloumnData = [];
-            console.log('currentExpandedKey------------------', currentExpandedKey, this.state.expanded);
-            // Object.keys( this.state.expanded).forEach((key) => {
-            //   if (this.state.expanded[key] === true) {
-            //     console.log('hhhhhh------', this.state.expanded[key]);
-            //     console.log('xxxxxxx------', data[key]);
-            //     coloumnData = data[key];
-            //   }
-            // })
+            console.log(
+              'currentExpandedKey------------------',
+              currentExpandedKey,
+              this.state.expanded
+            );
             console.log('coloumnData------------------', coloumnData);
+            this.jequeryCheckbox();
 
             return (
               <div className='react-nested-table-inner'>
@@ -497,14 +680,10 @@ class ReactNestedTable extends Component {
               onClick: (e, handleOriginal) => {
                 // used to identify which column is expanding
                 if (column.expander) {
-                  const expanded = { ...this.state.expanded };
-                  expanded[rowInfo.viewIndex] = this.state.expanded[rowInfo.viewIndex] ? false : true;
-                  // this.setState({ expanded }, ()=>{
-                  //   console.log('expanded-----', expanded);
-                  // });
-                  currentExpandedKeys[rowInfo.index] = column.id;
-                  console.log('currentExpandedKeys-----', currentExpandedKeys);
+                  currentExpandedKeys[rowInfo.index] = column.ID;
                 }
+
+                console.log('currentExpandedKeys------', currentExpandedKeys);
 
                 // IMPORTANT! React-Table uses onClick internally to trigger
                 // events like expanding SubComponents and pivots.
@@ -523,33 +702,40 @@ class ReactNestedTable extends Component {
   }
 
   render() {
-    return <>
-      <br />
-      <Container>
-        <Row>
-          <Col xs={{ order: 'first' }}></Col>
-          <Col xs>
-            <ControlButtons
+    return (
+      <>
+        <br />
+        <Container>
+          <Row>
+            <Col xs={{ order: 'first' }}></Col>
+            <Col xs>
+              <ControlButtons
+                selectedItems={this.state.selectedItems}
               selectedItems={this.state.selectedItems} 
-              onCancelClick={this.onCancelClick}/>
-          </Col>
-          <Col xs={{ order: 'last' }}></Col>
-        </Row>
-      </Container>
-      <br />
-      {this.renderByData(
-        this.state.allData,
-        this.props.headersMap,
-        this.props.onCellDisplay
-      )}
-    </>
+                selectedItems={this.state.selectedItems}
+              selectedItems={this.state.selectedItems} 
+                selectedItems={this.state.selectedItems}
+                onCancelClick={this.onCancelClick}
+              />
+            </Col>
+            <Col xs={{ order: 'last' }}></Col>
+          </Row>
+        </Container>
+        <br />
+        {this.renderByData(
+          this.state.allData,
+          this.props.headersMap,
+          this.props.onCellDisplay
+        )}
+      </>
+    );
   }
 }
 
 ReactNestedTable.defaultProps = {
   data: [],
   headersMap: {}
-}
+};
 
 ReactNestedTable.propTypes = {
   /**
@@ -561,6 +747,6 @@ ReactNestedTable.propTypes = {
    */
   headersMap: PropTypes.object,
   onCellDisplay: PropTypes.func
-}
+};
 
 export default ReactNestedTable;

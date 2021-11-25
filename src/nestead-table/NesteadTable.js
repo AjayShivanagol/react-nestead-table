@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Col, Container, FormControl, InputGroup, Row } from "react-bootstrap";
 import ReactNestedTable from ".";
+import Sidebar from "../sidebar/Sidebar";
 
 const headersMap = {
   name: "Full Name",
@@ -15,18 +16,31 @@ const onCellDisplay = () => {
 export class NesteadTable extends Component {
   render() {
     return (
-      <Container>
-        <Row>
-          <Col sm={2}></Col>
-          <Col sm={10}>
-            <ReactNestedTable
-              data={jsonData}
-              headersMap={headersMap}
-              onCellDisplay={onCellDisplay}
-            />
-          </Col>
-        </Row>
-      </Container>
+      // <Container>
+      //   <Row>
+      //     <Col sm={2}>
+      //     <Sidebar />
+      //     </Col>
+      //     <Col sm={10}>
+      //       <ReactNestedTable
+      //         data={jsonData}
+      //         headersMap={headersMap}
+      //         onCellDisplay={onCellDisplay}
+      //       />
+      //     </Col>
+      //   </Row>
+      // </Container>
+
+      <div class="maincontainer1">
+        <div class="leftcolumn"><Sidebar /></div>
+        <div class="contentwrapper">
+          <ReactNestedTable
+            data={jsonData}
+            headersMap={headersMap}
+            onCellDisplay={onCellDisplay}
+          />
+        </div>
+      </div>
     );
   }
 }
@@ -36,227 +50,391 @@ const jsonData = [
   {
     isMaster: false,
     selected: false,
-    id: 0,
-    firstName: "Janae",
-    lastName: "Considine",
-    bs: "out-of-the-box strategize methodologies",
-    catchPhrase: "Advanced tangible neural-net",
-    companyName: "Greenholt, Smith and Brekke",
-    detail: [{
-      isMaster: false,
-      selected: false,
-      id: 0.1,
-      firstName: "Tiaxxxxxnna",
-      lastName: "Hyatt",
-      address: [
-        {
-          isMaster: false,
-          selected: false,
-          id: 0.2,
-          zipCode: "333333",
-          city: "North Laurineshire",
-          street: "Jerde Spring"
-        },
-        {
-          isMaster: false,
-          selected: false,
-          id: 0.3,
-          zipCode: "03510",
-          city: "North Laurineshire",
-          street: "Jerde Spring"
-        }
-      ],
-      address1: {
-          isMaster: false,
-          selected: false,
-          id: 0.4,
-          zipCode: "0351s0",
-          city: "North Laurineshire",
-          street: "Jerde Spring"
-        },
-      email: "Niko95@hotmail.com",
-      avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/jagan123/128.jpg",
-      list: ["repellat", "deserunt", "praesentium"]
-    }, {
-      isMaster: false,
-      selected: false,
-      id: 0.12,
-      firstName: "Tiaxxxxxnna",
-      lastName: "Hyatt",
-    }]
+    ID: 0,
+    Name: "0940375C025200FAA38ED98A F9DE03D61ADAB727BA8C26D4 04D95D3",
+    "Business Profile Owner": "Gary Dingley",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
+        isMaster: false,
+        selected: false,
+        ID: 0.1,
+        Name: "0940375C025200FAA38ED98A F9DE03D61ADAB727BA8C26D4 66666",
+        "Risk Owner": "Gary Dingley",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 0.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 0.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
+      },
+      {
+        isMaster: false,
+        selected: false,
+        ID: 0.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Susheel Mulgund",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   },
   {
     isMaster: false,
     selected: false,
-    id: 1,
-    firstName: "Kelvin",
-    lastName: "Rogahn",
-    bs: "efficient leverage deliverables",
-    catchPhrase: "Extended zero defect monitoring",
-    companyName: "Durgan - Monahan",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 1.1,
-      firstName: "Colt",
-      lastName: "Christiansen",
-      address: {
+    ID: 1,
+    Name: "0940375C025200FAA38ED98A F9DE03D61ADAB727BA8C26D4 ABCD",
+    "Business Profile Owner": "owner ",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
         isMaster: false,
         selected: false,
-        id: 1.2,
-        zipCode: "30922",
-        city: "Everettberg",
-        street: "Herman Lakes"
+        ID: 1.1,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 1.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 1.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
       },
-      email: "Kris.Veum52@hotmail.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/Skyhartman/128.jpg",
-      list: ["adipisci", "et", "voluptatem"]
-    }
+      {
+        isMaster: false,
+        selected: false,
+        ID: 1.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   },
   {
     isMaster: false,
     selected: false,
-    id: 2,
-    firstName: "Consuelo",
-    lastName: "Schulist",
-    bs: "scalable monetize platforms",
-    catchPhrase: "Centralized explicit success",
-    companyName: "Davis, Anderson and Mante",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 2.1,
-      firstName: "Leta",
-      lastName: "McDermott",
-      address: {
+    ID: 2,
+    Name: "0940375C025200FAA38ED98A F9DE03D61ADAB727BA8C26D4",
+    "Business Profile Owner": "Susheel",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
         isMaster: false,
         selected: false,
-        id: 2.2,
-        zipCode: "46540-8948",
-        city: "East Veldaport",
-        street: "Douglas Glens"
+        ID: 2.1,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 2.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 2.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
       },
-      email: "Rodrick_Hodkiewicz@yahoo.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/noufalibrahim/128.jpg",
-      list: ["vel", "veritatis", "occaecati"]
-    }
+      {
+        isMaster: false,
+        selected: false,
+        ID: 2.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   },
   {
     isMaster: false,
     selected: false,
-    id: 3,
-    firstName: "Khalil",
-    lastName: "Nienow",
-    bs: "magnetic iterate technologies",
-    catchPhrase: "Fully-configurable analyzing monitoring",
-    companyName: "Skiles Inc",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 3.1,
-      firstName: "Michale",
-      lastName: "Jones",
-      address: {
+    ID: 3,
+    Name: "F9DE03D61ADAB727BA8C26D4 04D95D3 0940375C025200FAA38ED98A",
+    "Business Profile Owner": "Shivanagol",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
         isMaster: false,
         selected: false,
-        id: 3.2,
-        zipCode: "46856-0480",
-        city: "Georgettemouth",
-        street: "Ryley Haven"
+        ID: 3.1,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 3.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 3.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
       },
-      email: "Edgardo22@gmail.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/claudioguglieri/128.jpg",
-      list: ["unde", "earum", "aperiam"]
-    }
+      {
+        isMaster: false,
+        selected: false,
+        ID: 3.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   },
   {
     isMaster: false,
     selected: false,
-    id: 4,
-    firstName: "Gregg",
-    lastName: "Renner",
-    bs: "granular leverage infomediaries",
-    catchPhrase: "Fundamental fault-tolerant task-force",
-    companyName: "Schiller Group",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 4.1,
-      firstName: "Fred",
-      lastName: "Parisian",
-      address: {
+    ID: 4,
+    Name: "ADCCF9DE03D61ADAB727BA8C26D4 04D95D3 0940375C025200FAA38ED98A",
+    "Business Profile Owner": "Considine",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
         isMaster: false,
         selected: false,
-        id: 4.2,
-        zipCode: "33580",
-        city: "New Mustafachester",
-        street: "Stanley Extensions"
+        ID: 4.1,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 4.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 4.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
       },
-      email: "Ashlynn_Hayes@hotmail.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/jehnglynn/128.jpg",
-      list: ["et", "enim", "omnis"]
-    }
+      {
+        isMaster: false,
+        selected: false,
+        ID: 4.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   },
   {
     isMaster: false,
     selected: false,
-    id: 5,
-    firstName: "Armand",
-    lastName: "Stiedemann",
-    bs: "seamless exploit technologies",
-    catchPhrase: "Sharable attitude-oriented forecast",
-    companyName: "Simonis, Spencer and MacGyver",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 5.1,
-      firstName: "Madisyn",
-      lastName: "Lindgren",
-      address: {
+    ID: 5,
+    Name: "F9DE03D61ADAB727BA8C26D4 0940375C025200FAA38ED98A",
+    "Business Profile Owner": "Abhilash",
+    Folder: "out-of-the-box strategize methodologies",
+    "Profile Type": "Greenholt, Smith and Brekke",
+    Risk: [
+      {
         isMaster: false,
         selected: false,
-        id: 5.2,
-        zipCode: "58391-2167",
-        city: "South Tobin",
-        street: "O'Keefe Place"
+        ID: 5.1,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER",
+        Control: [
+          {
+            isMaster: false,
+            selected: false,
+            ID: 5.2,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          },
+          {
+            isMaster: false,
+            selected: false,
+            ID: 5.21,
+            "Control Owner": "333333",
+            "Control Taxonomy Hierarchy": "North Laurineshire",
+            "Control Type 3": "Jerde Spring",
+            "Control Classification": "Control Classification",
+            "CAP Testing Scope": "CAP Testing Scope",
+            Folder: "Folder / Folder /Folder"
+          }
+        ]
       },
-      email: "Myrtle_Gleichner30@hotmail.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/borantula/128.jpg",
-      list: ["qui", "perspiciatis", "iusto"]
-    }
-  },
-  {
-    isMaster: false,
-    selected: false,
-    id: 6,
-    firstName: "Pete",
-    lastName: "Adams",
-    bs: "end-to-end morph partnerships",
-    catchPhrase: "Fundamental cohesive emulation",
-    companyName: "Hansen - Kertzmann",
-    detail: {
-      isMaster: false,
-      selected: false,
-      id: 6.1,
-      firstName: "Bertha",
-      lastName: "Buckridge",
-      address: {
+      {
         isMaster: false,
         selected: false,
-        id: 6.2,
-        zipCode: "25904",
-        city: "Rippinport",
-        street: "Henriette Grove"
-      },
-      email: "Christop.Ullrich58@hotmail.com",
-      avatar:
-        "https://s3.amazonaws.com/uifaces/faces/twitter/rachelreveley/128.jpg",
-      list: ["tempore", "qui", "numquam"]
-    }
+        ID: 5.11,
+        Name: "Tiaxxxxxnna",
+        "Risk Owner": "Lindgren",
+        "Risk Taxonomy": "Lindgren",
+        "Inherent Risk Rating": "Lindgren",
+        "Overall Control Effectiveness Rating and Residual Risk Rating":
+          "Lindgren",
+        "Residual L2 Approval Status": "Lindgren",
+        "Residual L2 Date": "Residual L2 Date",
+        "Risk Treatment": "Lindgren",
+        Folder: "CBA / TRQ / FOLDER"
+      }
+    ]
   }
 ];

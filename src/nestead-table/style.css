@@ -1,0 +1,58 @@
+.ReactTable {
+    max-height: 87vh;
+  }
+  .ReactTable .rt-thead {
+    overflow-y: scroll;
+  }
+  .ReactTable .rt-thead .rt-th {
+    outline: none;
+  }
+  .ReactTable .react-nested-table-inner {
+    padding: 20px;
+    padding-top: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .ReactTable .react-nested-table-inner .title {
+    font-weight: bold;
+    font-size: 1.6rem;
+  }
+  .ReactTable .image {
+    width: 100%;
+  }
+  
+  .maincontainer1 {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .leftcolumn {
+    position: fixed;
+    float: left;
+    width: 300px;
+    height: 100%;
+    background: #f3f3f3;
+  }
+  
+  .contentwrapper {
+    /* position: absolute; */
+    float: right;
+    height: 100%;
+    width: 100%;
+    margin-left: 10px;
+    align-items: stretch;
+  }
+  
+  .wrapper {
+    /* display: flex; */
+    /* align-items: stretch; */
+  }
+  
+  .margin-bottom {
+    margin-bottom: 15px;
+  }
+  
+  .width {
+    width: "100%";
+  }
+  

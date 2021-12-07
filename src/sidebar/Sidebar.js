@@ -2,75 +2,117 @@ import React from "react";
 import "./sidebar.css";
 import Multiselect from "multiselect-react-dropdown";
 import Button from "@restart/ui/esm/Button";
+import { jsonData } from "../nestead-table/NesteadTable";
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      active: !this.props.open || true,
       objectType: window.objectType,
-      businessProfilesOption: [
-        { name: "Business Profile Approved", type: "bp" },
-        { name: "Business Profile In Progress - Op Risk", type: "bp" },
-        { name: "Business Profile Instances", type: "bp" },
-        { name: "BU/SU Profile", type: "bp" }
+
+      residualRiskRatingOptions: [
+        { name: "Low", type: "risk", column: "Residual Risk Rating" },
+        { name: "Medium", type: "risk", column: "Residual Risk Rating" },
+        { name: "High", type: "risk", column: "Residual Risk Rating" },
+        { name: "Very High", type: "risk", column: "Residual Risk Rating" }
       ],
 
-      risksOption: [
-        { name: "Effective", type: "risk" },
-        { name: "Not determined", type: "risk" },
-        { name: "Low", type: "risk" },
-        { name: "Medium", type: "risk" },
-        { name: "Impact", type: "risk" },
-        { name: "very High", type: "risk" },
-        { name: "Paratially Effective", type: "risk" },
-        { name: "Ineffective", type: "risk" },
+      overallControlEffeOptions: [
+        {
+          name: "Not Assessed",
+          type: "risk",
+          column: "Overall Control Effectiveness Rating"
+        },
+        {
+          name: "Insignificant",
+          type: "risk",
+          column: "Overall Control Effectiveness Rating"
+        }
       ],
 
-      controlsOptions: [
-        { name: "Active", type: "control" },
-        { name: "Draft", type: "control" },
+      ControlEffectivenesssOptions: [
+        {
+          name: "Partially Effective",
+          type: "control",
+          column: "Control Effectiveness Rating"
+        },
+        {
+          name: "Effective",
+          type: "control",
+          column: "Control Effectiveness Rating"
+        },
+        {
+          name: "Not Determined",
+          type: "control",
+          column: "Control Effectiveness Rating"
+        },
+        {
+          name: "Not Tested",
+          type: "control",
+          column: "Control Effectiveness Rating"
+        }
+      ],
+
+      ControlClassificationOPtions: [
+        { name: "Key", type: "control", column: "Control Classification" },
+        {
+          name: "Compensating",
+          type: "control",
+          column: "Control Classification"
+        },
+        {
+          name: "Arrangement",
+          type: "control",
+          column: "Control Classification"
+        }
       ]
     };
   }
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   renderCheckbox() {
     return (
       <div>
         <div>
-          <input type="checkbox" id="scales" name="scales"
-          />
-          <label for="scales">Residual Risk Rating</label>
+          <input type="checkbox" id="generic" name="generic" />{" "}
+          <label className="filter-checkbox">Generic</label>
         </div>
         <br />
         <div>
-          <input type="checkbox" id="horns" name="horns" />
-          <label for="horns">CAP Test Scope</label>
+          <input type="checkbox" id="supplier" name="supplier" />{" "}
+          <label className="filter-checkbox">Supplier </label>
         </div>
         <br />
         <div>
-          <input type="checkbox" id="horns" name="horns" />
-          <label for="horns">Taxonomy</label>
+          <input type="checkbox" id="controls" name="controls" />{" "}
+          <label className="filter-checkbox">IT controls</label>
         </div>
         <br />
       </div>
-    )
+    );
   }
 
   renderMultiselect() {
     const {
-      businessProfilesOption,
-      risksOption,
-      controlsOptions,
+      residualRiskRatingOptions,
+      overallControlEffeOptions,
+      ControlEffectivenesssOptions,
+      ControlClassificationOPtions
     } = this.state;
-    const customFilters = ["Business Profiles", "Risks", "Controls"];
+    const customFilters = [
+      "Residual Risk Rating",
+      "Overall Control Effectiveness Rating",
+      "Control Effectiveness Rating",
+      "Control Classification"
+    ];
     const customFilterOptions = [
-      businessProfilesOption,
-      risksOption,
-      controlsOptions,
-      controlsOptions,
+      residualRiskRatingOptions,
+      overallControlEffeOptions,
+      ControlEffectivenesssOptions,
+      ControlClassificationOPtions
     ];
 
     const multiselect = customFilters.map((customFilter, index) => {
@@ -81,6 +123,7 @@ class Sidebar extends React.Component {
             key={index}
             options={customFilterOptions[index]}
             onSelect={this.props.onselect}
+            allData = {jsonData}
             onRemove={this.props.onremove}
             displayValue="name"
             showCheckbox
@@ -90,7 +133,10 @@ class Sidebar extends React.Component {
             avoidHighlightFirstOption="false"
             style={{
               multiselectContainer: {
-                width: "100%"
+                width: "100%",
+                fontSize: "11px",
+                // paddingLeft: '-180px',
+                marginLeft: "-20px"
               }
             }}
           />
@@ -103,35 +149,33 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const { open } = this.props;
+    const active = !open;
     return (
-      <div className="sidebar" id="sidebar">
-        <h6>
-          {" "}
-          <span className="text">Custom Filters</span>
-          <br />
-        </h6>
-        <div className="hrline">
-          <hr />
+      <nav id="sidebar" className={active ? "active" : null}>
+        <div className="sidebar" id="sidebar">
+          <h6>
+            {" "}
+            <div className="text">Custom Filters</div>
+            <br />
+          </h6>
+          <div className="hrline">
+            <hr />
+          </div>
+          <div className="textaction sidebar-item">
+            <ul className="actionitems">
+              {this.renderMultiselect()}
+              {this.renderCheckbox()}
+              <button type="submit" size="lg" className="btn-default">
+                Apply
+              </button>{" "}
+              <button type="submit" size="lg" className="btn-default">
+                Cancel
+              </button>
+            </ul>
+          </div>
         </div>
-        <div className="textaction">
-          <ul className="actionitems">
-            {this.renderMultiselect()}
-            {this.renderCheckbox()}
-            <button
-              type="submit"
-              size="lg"
-              className="btn-default">
-              Apply
-            </button>{' '}
-            <button
-              type="submit"
-              size="lg"
-              className="btn-default">
-              Cancel
-            </button>
-          </ul>
-        </div>
-      </div>
+      </nav>
     );
   }
 }

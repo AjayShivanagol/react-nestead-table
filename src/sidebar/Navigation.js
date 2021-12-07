@@ -11,9 +11,7 @@ export class Navigation extends React.Component {
       <Navbar>
         <button onClick={toggleMenu}>
           <Navbar.Brand>
-            <div className="Toggle-header">
               Toggle Custom Filters
-            </div>
           </Navbar.Brand>
         </button>
       </Navbar>

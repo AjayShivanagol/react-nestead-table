@@ -101,6 +101,7 @@ export const jsonData = [
             selected: false,
             Key: 0.2,
             ID: "CT-000187",
+            Name: "91C680FC5F8961F1B3BC5016 D36393A127D0B",
             "Control Owner": "Claudia Farnsworth",
             "Control Taxonomy Hierarchy":
               "CAC0FD11616DF770C802B080 A60E29E11C2CBFD4A4",
@@ -118,6 +119,7 @@ export const jsonData = [
             selected: false,
             Key: 0.21,
             ID: "CT-000179",
+            Name: "91C680FC5F8961F1B3BC5016 D36393A127D0B",
             "Control Owner": "Jacqueline Schrader",
             "Control Taxonomy Hierarchy": "",
             "Control Type 3": "Jerde Spring",

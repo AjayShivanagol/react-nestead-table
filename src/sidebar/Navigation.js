@@ -10,9 +10,9 @@ export class Navigation extends React.Component {
     return (
       <Navbar>
         <button onClick={toggleMenu}>
-          <Navbar.Brand>
+          {/* <Navbar.Brand> */}
               Toggle Custom Filters
-          </Navbar.Brand>
+          {/* </Navbar.Brand> */}
         </button>
       </Navbar>
     );
